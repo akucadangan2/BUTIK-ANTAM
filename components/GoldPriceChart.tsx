@@ -82,7 +82,7 @@ export default function GoldPriceChart({ prices }: { prices: PricePoint[] }) {
             width={50}
           />
           <Tooltip
-            formatter={(value: number) => formatRupiah(value)}
+            formatter={(value) => formatRupiah(Number(value))}
             contentStyle={{ background: '#1A1A2E', border: 'none', borderRadius: 8, fontSize: 13 }}
             labelStyle={{ color: '#9CA3AF' }}
           />
