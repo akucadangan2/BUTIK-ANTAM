@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useCart } from '@/hooks/useCart'
 import { formatRupiah } from '@/lib/utils'
 import type { Product } from '@/lib/types'
@@ -13,8 +14,15 @@ export default function ProductCard({ product }: { product: Product }) {
     ? Math.round((1 - product.price_sell / product.price_original) * 100)
     : null
 
+  function handleAddToCart(e: React.MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    addItem(product)
+  }
+
   return (
-    <div
+    <Link
+      href={`/katalog/${product.slug}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -28,9 +36,10 @@ export default function ProductCard({ product }: { product: Product }) {
         transition: 'box-shadow 0.2s, transform 0.2s',
         boxShadow: hovered ? '0 8px 20px rgba(0,0,0,0.08)' : '0 1px 2px rgba(0,0,0,0.02)',
         transform: hovered ? 'translateY(-3px)' : 'none',
+        textDecoration: 'none',
+        color: 'inherit',
       }}
     >
-      {/* Foto produk */}
       <div
         style={{
           position: 'relative',
@@ -92,7 +101,6 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
       </div>
 
-      {/* Info produk */}
       <div style={{ padding: 'clamp(10px, 3vw, 18px)', display: 'flex', flexDirection: 'column', gap: 3, flex: 1 }}>
         <span
           style={{
@@ -125,7 +133,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         <button
-          onClick={() => addItem(product)}
+          onClick={handleAddToCart}
           style={{
             marginTop: 'auto',
             width: '100%',
@@ -152,6 +160,6 @@ export default function ProductCard({ product }: { product: Product }) {
           <span style={{ whiteSpace: 'nowrap' }}>Tambah</span>
         </button>
       </div>
-    </div>
+    </Link>
   )
 }
