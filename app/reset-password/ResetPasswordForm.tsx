@@ -1,18 +1,52 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase-client'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function ResetPasswordForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
+  const exchanged = useRef(false)
 
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
+
+  useEffect(() => {
+    async function init() {
+      if (exchanged.current) return
+      exchanged.current = true
+
+      // Kalau sesi sudah ada (misal halaman di-reload setelah kode dipakai), langsung siap
+      const { data: existing } = await supabase.auth.getSession()
+      if (existing.session) {
+        setStatus('ready')
+        return
+      }
+
+      const code = searchParams.get('code')
+      if (!code) {
+        setStatus('error')
+        return
+      }
+
+      const { error } = await supabase.auth.exchangeCodeForSession(code)
+      if (error) {
+        setStatus('error')
+        return
+      }
+
+      setStatus('ready')
+    }
+
+    init()
+  }, [searchParams, supabase])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -23,22 +57,39 @@ export default function ResetPasswordForm() {
       return
     }
 
-    setLoading(true)
+    setSubmitting(true)
 
     const { error } = await supabase.auth.updateUser({ password })
 
     if (error) {
       setError(error.message)
-      setLoading(false)
+      setSubmitting(false)
       return
     }
 
     setSuccess(true)
-    setLoading(false)
+    setSubmitting(false)
 
     setTimeout(() => {
       router.push('/login')
     }, 2000)
+  }
+
+  if (status === 'loading') {
+    return <p style={{ fontSize: 13, color: 'var(--muted)' }}>Memverifikasi link...</p>
+  }
+
+  if (status === 'error') {
+    return (
+      <div>
+        <p style={{ fontSize: 13, color: '#DC2626', background: '#FEF2F2', padding: '12px 14px', borderRadius: 8, marginBottom: 16 }}>
+          Link reset password tidak valid atau sudah kedaluwarsa.
+        </p>
+        <Link href="/lupa-password" style={{ fontSize: 13, fontWeight: 700, color: 'var(--gold-dark)' }}>
+          Minta link baru →
+        </Link>
+      </div>
+    )
   }
 
   if (success) {
@@ -87,7 +138,7 @@ export default function ResetPasswordForm() {
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={submitting}
         style={{
           padding: '13px 0',
           background: 'var(--gold)',
@@ -96,11 +147,11 @@ export default function ResetPasswordForm() {
           fontWeight: 700,
           fontSize: 14,
           color: '#1A1A2E',
-          cursor: loading ? 'default' : 'pointer',
-          opacity: loading ? 0.7 : 1,
+          cursor: submitting ? 'default' : 'pointer',
+          opacity: submitting ? 0.7 : 1,
         }}
       >
-        {loading ? 'Menyimpan...' : 'Simpan Password Baru'}
+        {submitting ? 'Menyimpan...' : 'Simpan Password Baru'}
       </button>
     </form>
   )
