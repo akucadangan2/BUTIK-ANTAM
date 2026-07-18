@@ -116,15 +116,15 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main style={{ padding: '40px 40px 60px', maxWidth: 1100, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 26, fontWeight: 800, color: 'var(--text)', marginBottom: 28 }}>Checkout</h1>
+    <main style={{ padding: 'clamp(20px, 5vw, 40px) clamp(16px, 5vw, 40px) clamp(32px, 6vw, 60px)', maxWidth: 1100, margin: '0 auto' }}>
+      <h1 style={{ fontSize: 'clamp(20px, 4vw, 26px)', fontWeight: 800, color: 'var(--text)', marginBottom: 'clamp(16px, 4vw, 28px)' }}>
+        Checkout
+      </h1>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 32, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        <div style={{ flex: '1 1 480px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>
-              Informasi Kontak
-            </h2>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 'clamp(16px, 4vw, 32px)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 480px', display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 20px)', minWidth: 0 }}>
+          <div style={cardStyle}>
+            <h2 style={cardTitleStyle}>Informasi Kontak</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <input
                 placeholder="Nama Lengkap"
@@ -133,13 +133,13 @@ export default function CheckoutPage() {
                 required
                 style={inputStyle}
               />
-              <div style={{ display: 'flex', gap: 12 }}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <input
                   placeholder="No. HP / WhatsApp"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  style={{ ...inputStyle, flex: 1 }}
+                  style={{ ...inputStyle, flex: '1 1 140px' }}
                 />
                 <input
                   type="email"
@@ -147,30 +147,28 @@ export default function CheckoutPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  style={{ ...inputStyle, flex: 1 }}
+                  style={{ ...inputStyle, flex: '1 1 140px' }}
                 />
               </div>
               <div>
-                <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>
+                <label style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>
                   Foto KTP/NPWP (opsional)
                 </label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setKtpFile(e.target.files?.[0] ?? null)}
-                  style={{ fontSize: 13 }}
+                  style={{ fontSize: 12.5, maxWidth: '100%' }}
                 />
-                <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 4 }}>
+                <p style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 4 }}>
                   Membantu mempercepat verifikasi untuk transaksi nominal besar.
                 </p>
               </div>
             </div>
           </div>
 
-          <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>
-              Alamat Pengiriman
-            </h2>
+          <div style={cardStyle}>
+            <h2 style={cardTitleStyle}>Alamat Pengiriman</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <textarea
                 placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan"
@@ -180,49 +178,49 @@ export default function CheckoutPage() {
                 rows={2}
                 style={{ ...inputStyle, resize: 'vertical' }}
               />
-              <div style={{ display: 'flex', gap: 12 }}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <input
                   placeholder="Kota / Kabupaten"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   required
-                  style={{ ...inputStyle, flex: 2 }}
+                  style={{ ...inputStyle, flex: '2 1 120px' }}
                 />
                 <input
                   placeholder="Provinsi"
                   value={province}
                   onChange={(e) => setProvince(e.target.value)}
                   required
-                  style={{ ...inputStyle, flex: 2 }}
+                  style={{ ...inputStyle, flex: '2 1 120px' }}
                 />
                 <input
                   placeholder="Kode Pos"
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
                   required
-                  style={{ ...inputStyle, flex: 1 }}
+                  style={{ ...inputStyle, flex: '1 1 90px' }}
                 />
               </div>
             </div>
           </div>
 
-          <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>Kurir Pengiriman</h2>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#16A34A', background: '#F0FDF4', padding: '3px 10px', borderRadius: 999 }}>
+          <div style={cardStyle}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, flexWrap: 'wrap', gap: 8 }}>
+              <h2 style={{ ...cardTitleStyle, marginBottom: 0 }}>Kurir Pengiriman</h2>
+              <span style={{ fontSize: 10.5, fontWeight: 700, color: '#16A34A', background: '#F0FDF4', padding: '3px 9px', borderRadius: 999, whiteSpace: 'nowrap' }}>
                 Termasuk Asuransi
               </span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {COURIERS.map((c) => (
                 <label
                   key={c.value}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 14,
-                    padding: 14,
+                    gap: 'clamp(8px, 2vw, 14px)',
+                    padding: 'clamp(10px, 2.5vw, 14px)',
                     border: courier === c.value ? '2px solid var(--gold)' : '1px solid var(--border)',
                     borderRadius: 10,
                     cursor: 'pointer',
@@ -235,75 +233,75 @@ export default function CheckoutPage() {
                     value={c.value}
                     checked={courier === c.value}
                     onChange={(e) => setCourier(e.target.value)}
-                    style={{ accentColor: 'var(--gold)' }}
+                    style={{ accentColor: 'var(--gold)', flexShrink: 0 }}
                   />
                   <div
                     style={{
-                      width: 36,
-                      height: 36,
+                      width: 'clamp(28px, 7vw, 36px)',
+                      height: 'clamp(28px, 7vw, 36px)',
                       borderRadius: 8,
                       background: c.color,
                       color: '#fff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: 11,
+                      fontSize: 'clamp(9px, 2vw, 11px)',
                       fontWeight: 800,
                       flexShrink: 0,
                     }}
                   >
                     {c.badge}
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{c.label}</p>
-                    <p style={{ fontSize: 12, color: 'var(--muted)' }}>{c.desc}</p>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ fontSize: 'clamp(12.5px, 2.8vw, 14px)', fontWeight: 700, color: 'var(--text)' }}>{c.label}</p>
+                    <p style={{ fontSize: 'clamp(10.5px, 2.3vw, 12px)', color: 'var(--muted)' }}>{c.desc}</p>
                   </div>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>{formatRupiah(SHIPPING_COST)}</p>
+                  <p style={{ fontSize: 'clamp(11.5px, 2.5vw, 13px)', fontWeight: 700, color: 'var(--text)', whiteSpace: 'nowrap' }}>
+                    {formatRupiah(SHIPPING_COST)}
+                  </p>
                 </label>
               ))}
             </div>
           </div>
         </div>
 
-        <div style={{ flex: '0 1 340px', minWidth: 300, position: 'sticky', top: 20 }}>
-          <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>
-              Ringkasan Pesanan
-            </h2>
+        <div style={{ flex: '0 1 340px', minWidth: 280, position: 'sticky', top: 20, width: '100%' }}>
+          <div style={cardStyle}>
+            <h2 style={cardTitleStyle}>Ringkasan Pesanan</h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
               {items.map((i) => (
-                <div key={i.product.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
+                <div key={i.product.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, gap: 8 }}>
                   <span style={{ color: 'var(--text)' }}>
                     {i.product.name} <span style={{ color: 'var(--muted)' }}>x{i.quantity}</span>
                   </span>
-                  <span style={{ fontWeight: 600, color: 'var(--text)' }}>
+                  <span style={{ fontWeight: 600, color: 'var(--text)', whiteSpace: 'nowrap' }}>
                     {formatRupiah(i.product.price_sell * i.quantity)}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div style={{ borderTop: '1px solid var(--border)', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--muted)' }}>
+            <div style={{ borderTop: '1px solid var(--border)', paddingTop: 10, display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, color: 'var(--muted)' }}>
                 <span>Subtotal</span>
                 <span>{formatRupiah(totalPrice)}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, color: 'var(--muted)' }}>
                 <span>Ongkos Kirim</span>
                 <span>{formatRupiah(SHIPPING_COST)}</span>
               </div>
             </div>
 
-            <div style={{ borderTop: '1px solid var(--border)', marginTop: 12, paddingTop: 12, display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>Total</span>
-              <span className="price" style={{ fontSize: 19, fontWeight: 800, color: 'var(--text)' }}>
+            <div style={{ borderTop: '1px solid var(--border)', marginTop: 10, paddingTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--text)' }}>Total</span>
+              <span className="price" style={{ fontSize: 'clamp(16px, 3.5vw, 19px)', fontWeight: 800, color: 'var(--text)' }}>
                 {formatRupiah(grandTotal)}
               </span>
             </div>
 
             {error && (
-              <p style={{ fontSize: 13, color: '#DC2626', background: '#FEF2F2', padding: '10px 12px', borderRadius: 8, marginTop: 16 }}>
+              <p style={{ fontSize: 12.5, color: '#DC2626', background: '#FEF2F2', padding: '9px 11px', borderRadius: 8, marginTop: 14 }}>
                 {error}
               </p>
             )}
@@ -312,14 +310,14 @@ export default function CheckoutPage() {
               type="submit"
               disabled={loading}
               style={{
-                marginTop: 20,
+                marginTop: 16,
                 width: '100%',
-                padding: '13px 0',
+                padding: 'clamp(11px, 2.8vw, 13px) 0',
                 background: 'var(--gold)',
                 border: 'none',
                 borderRadius: 10,
                 fontWeight: 700,
-                fontSize: 14,
+                fontSize: 'clamp(13px, 3vw, 14px)',
                 color: '#1A1A2E',
                 cursor: loading ? 'default' : 'pointer',
                 opacity: loading ? 0.7 : 1,
@@ -334,11 +332,25 @@ export default function CheckoutPage() {
   )
 }
 
+const cardStyle: React.CSSProperties = {
+  border: '1px solid var(--border)',
+  borderRadius: 14,
+  padding: 'clamp(14px, 3.5vw, 24px)',
+}
+
+const cardTitleStyle: React.CSSProperties = {
+  fontSize: 'clamp(13.5px, 3vw, 15px)',
+  fontWeight: 800,
+  color: 'var(--text)',
+  marginBottom: 14,
+}
+
 const inputStyle: React.CSSProperties = {
-  padding: '11px 14px',
+  padding: 'clamp(9px, 2.3vw, 11px) clamp(11px, 2.8vw, 14px)',
   border: '1px solid var(--border)',
   borderRadius: 8,
-  fontSize: 14,
+  fontSize: 'clamp(13px, 3vw, 14px)',
   fontFamily: 'inherit',
   width: '100%',
+  minWidth: 0,
 }
