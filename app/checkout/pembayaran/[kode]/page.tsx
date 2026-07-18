@@ -66,31 +66,11 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
           per satu kali transaksi.
         </p>
         <p style={{ fontSize: 'clamp(11.5px, 2.6vw, 13px)', color: 'var(--muted)', lineHeight: 1.6, marginTop: 8, textAlign: 'center' }}>
-          Untuk melanjutkan pembayaran, silakan tekan WhatsApp admin di bawah.
+          Untuk melanjutkan pembayaran, silakan tekan tombol konfirmasi di bawah ini.
         </p>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 'clamp(14px, 3vw, 20px)' }}>
-        <Link
-          href={waLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'block',
-            textAlign: 'center',
-            width: '100%',
-            padding: 'clamp(11px, 2.8vw, 14px) 0',
-            background: '#25D366',
-            color: '#fff',
-            borderRadius: 10,
-            fontWeight: 700,
-            fontSize: 'clamp(13px, 3vw, 15px)',
-            textDecoration: 'none',
-          }}
-        >
-          WhatsApp Admin
-        </Link>
-
         <Link
           href={`/checkout/pembayaran/${order.order_code}/konfirmasi`}
           style={{
@@ -111,6 +91,13 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
 
         <CancelOrderButton orderId={order.id} />
       </div>
+
+      <p style={{ textAlign: 'center', fontSize: 11.5, color: 'var(--muted)' }}>
+        Ada kendala mendesak?{' '}
+        <Link href={waLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gold-dark)', fontWeight: 700 }}>
+          Hubungi Admin via WhatsApp
+        </Link>
+      </p>
     </main>
   )
 }
