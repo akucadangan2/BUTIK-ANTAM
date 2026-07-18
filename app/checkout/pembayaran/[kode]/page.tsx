@@ -4,6 +4,8 @@ import { formatRupiah } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 import CancelOrderButton from '@/components/CancelOrderButton'
 
+const DEFAULT_WHATSAPP = '6289563522389'
+
 export default async function PembayaranPage({ params }: { params: Promise<{ kode: string }> }) {
   const { kode } = await params
   const supabase = await createClient()
@@ -22,10 +24,12 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
     .limit(1)
     .single()
 
+  const whatsappNumber = settings?.whatsapp_number || DEFAULT_WHATSAPP
+
   const waMessage = encodeURIComponent(
     `Halo Admin Butik Antam, saya butuh bantuan untuk pesanan ${order.order_code}.`
   )
-  const waLink = `https://wa.me/${settings?.whatsapp_number}?text=${waMessage}`
+  const waLink = `https://wa.me/${whatsappNumber}?text=${waMessage}`
 
   return (
     <main style={{ padding: 'clamp(16px, 5vw, 48px) clamp(16px, 5vw, 40px) clamp(28px, 6vw, 48px)', maxWidth: 460, margin: '0 auto' }}>
@@ -58,12 +62,35 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
           style={{ width: '100%', maxWidth: 260, margin: '0 auto', borderRadius: 8, display: 'block' }}
         />
         <p style={{ fontSize: 'clamp(11.5px, 2.6vw, 13px)', color: 'var(--muted)', lineHeight: 1.6, marginTop: 'clamp(10px, 2.5vw, 14px)', textAlign: 'center' }}>
-          Scan QRIS di atas untuk membayar, atau transfer manual ke rekening BRI
-          kami. Setelah membayar, klik tombol di bawah dan lampirkan bukti transfer.
+          Gunakan kode QRIS di atas untuk pembayaran, maksimal Rp 10.000.000
+          per satu kali transaksi.
+        </p>
+        <p style={{ fontSize: 'clamp(11.5px, 2.6vw, 13px)', color: 'var(--muted)', lineHeight: 1.6, marginTop: 8, textAlign: 'center' }}>
+          Untuk melanjutkan pembayaran, silakan tekan WhatsApp admin di bawah.
         </p>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 'clamp(14px, 3vw, 20px)' }}>
+        <Link
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'block',
+            textAlign: 'center',
+            width: '100%',
+            padding: 'clamp(11px, 2.8vw, 14px) 0',
+            background: '#25D366',
+            color: '#fff',
+            borderRadius: 10,
+            fontWeight: 700,
+            fontSize: 'clamp(13px, 3vw, 15px)',
+            textDecoration: 'none',
+          }}
+        >
+          WhatsApp Admin
+        </Link>
+
         <Link
           href={`/checkout/pembayaran/${order.order_code}/konfirmasi`}
           style={{
@@ -84,13 +111,6 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
 
         <CancelOrderButton orderId={order.id} />
       </div>
-
-      <p style={{ textAlign: 'center', fontSize: 11.5, color: 'var(--muted)' }}>
-        Butuh bantuan?{' '}
-        <Link href={waLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gold-dark)', fontWeight: 700 }}>
-          Hubungi Admin
-        </Link>
-      </p>
     </main>
   )
 }
