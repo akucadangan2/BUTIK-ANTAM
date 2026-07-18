@@ -28,20 +28,20 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
   const waLink = `https://wa.me/${settings?.whatsapp_number}?text=${waMessage}`
 
   return (
-    <main style={{ padding: 'clamp(24px, 6vw, 48px) clamp(16px, 5vw, 40px)', maxWidth: 480, margin: '0 auto' }}>
-      <div style={{ textAlign: 'center', marginBottom: 24 }}>
-        <p style={{ fontSize: 13, color: 'var(--muted)' }}>Invoice</p>
-        <p style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{order.order_code}</p>
-        <p style={{ fontSize: 'clamp(20px, 5vw, 26px)', fontWeight: 800, color: 'var(--gold-dark)', marginTop: 8 }}>
+    <main style={{ padding: 'clamp(16px, 5vw, 48px) clamp(16px, 5vw, 40px) clamp(28px, 6vw, 48px)', maxWidth: 460, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 'clamp(14px, 3vw, 24px)' }}>
+        <p style={{ fontSize: 12, color: 'var(--muted)' }}>Invoice</p>
+        <p style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)' }}>{order.order_code}</p>
+        <p style={{ fontSize: 'clamp(18px, 4.5vw, 24px)', fontWeight: 800, color: 'var(--gold-dark)', marginTop: 6 }}>
           {formatRupiah(order.total_amount)}
         </p>
         <span
           style={{
             display: 'inline-block',
-            marginTop: 8,
-            fontSize: 11,
+            marginTop: 6,
+            fontSize: 10.5,
             fontWeight: 700,
-            padding: '4px 12px',
+            padding: '3px 11px',
             borderRadius: 999,
             background: '#FEF3C7',
             color: '#92400E',
@@ -51,35 +51,31 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
         </span>
       </div>
 
-      <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 'clamp(16px, 4vw, 20px)', marginBottom: 20 }}>
+      <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 'clamp(12px, 3.5vw, 18px)', marginBottom: 'clamp(14px, 3vw, 20px)' }}>
         <img
           src="/images/QRIS BUTIK ANTAM.jpg"
           alt="QRIS Butik Antam"
-          style={{ width: '100%', borderRadius: 8, display: 'block' }}
+          style={{ width: '100%', maxWidth: 260, margin: '0 auto', borderRadius: 8, display: 'block' }}
         />
-      </div>
-
-      <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 'clamp(16px, 4vw, 20px)', marginBottom: 20 }}>
-        <p style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.7 }}>
-          Scan QRIS di atas untuk membayar, atau transfer manual ke rekening
-          BRI kami. Setelah membayar, klik <strong>Konfirmasi Pembayaran</strong>{' '}
-          dan lampirkan bukti transfer.
+        <p style={{ fontSize: 'clamp(11.5px, 2.6vw, 13px)', color: 'var(--muted)', lineHeight: 1.6, marginTop: 'clamp(10px, 2.5vw, 14px)', textAlign: 'center' }}>
+          Scan QRIS di atas untuk membayar, atau transfer manual ke rekening BRI
+          kami. Setelah membayar, klik tombol di bawah dan lampirkan bukti transfer.
         </p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 'clamp(14px, 3vw, 20px)' }}>
         <Link
           href={`/checkout/pembayaran/${order.order_code}/konfirmasi`}
           style={{
             display: 'block',
             textAlign: 'center',
             width: '100%',
-            padding: 'clamp(13px, 3vw, 15px) 0',
+            padding: 'clamp(11px, 2.8vw, 14px) 0',
             background: 'var(--gold)',
             color: '#1A1A2E',
             borderRadius: 10,
             fontWeight: 700,
-            fontSize: 'clamp(14px, 3vw, 15px)',
+            fontSize: 'clamp(13px, 3vw, 15px)',
             textDecoration: 'none',
           }}
         >
@@ -89,8 +85,8 @@ export default async function PembayaranPage({ params }: { params: Promise<{ kod
         <CancelOrderButton orderId={order.id} />
       </div>
 
-      <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--muted)' }}>
-        Butuh bantuan atau ada kendala lain?{' '}
+      <p style={{ textAlign: 'center', fontSize: 11.5, color: 'var(--muted)' }}>
+        Butuh bantuan?{' '}
         <Link href={waLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gold-dark)', fontWeight: 700 }}>
           Hubungi Admin
         </Link>
