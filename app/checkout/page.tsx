@@ -4,33 +4,19 @@ import { useState } from 'react'
 import { useCart } from '@/hooks/useCart'
 import { createClient } from '@/lib/supabase-client'
 import { formatRupiah } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 const SHIPPING_COST = 30000
 
-// 1. Update konstanta COURIERS untuk menggunakan logo alih-alih warna dan badge
 const COURIERS = [
-  { 
-    value: 'jne', 
-    label: 'JNE Reguler', 
-    desc: '2-4 hari kerja', 
-    logo: 'https://zonalogo.com/assets/logo-jne.webp?asset=1529&w=240' 
-  },
-  { 
-    value: 'anteraja', 
-    label: 'AnterAja', 
-    desc: '2-3 hari kerja', 
-    logo: 'https://zonalogo.com/assets/logo-anteraja.webp?asset=1539&w=240' 
-  },
-  { 
-    value: 'paxel', 
-    label: 'Paxel', 
-    desc: 'Same day / next day (kota besar)', 
-    logo: 'https://zonalogo.com/assets/logo-paxel-png-svg.webp?asset=1841&w=240' 
-  },
+  { value: 'jne', label: 'JNE Reguler', desc: '2-4 hari kerja', badge: 'JNE', color: '#DC2626' },
+  { value: 'anteraja', label: 'AnterAja', desc: '2-3 hari kerja', badge: 'AJ', color: '#EA580C' },
+  { value: 'paxel', label: 'Paxel', desc: 'Same day / next day (kota besar)', badge: 'PX', color: '#0D9488' },
 ]
 
 export default function CheckoutPage() {
-  const { items, totalPrice } = useCart()
+  const { items, totalPrice, clearCart } = useCart()
+  const router = useRouter()
   const supabase = createClient()
 
   const [name, setName] = useState('')
@@ -41,6 +27,7 @@ export default function CheckoutPage() {
   const [province, setProvince] = useState('')
   const [postalCode, setPostalCode] = useState('')
   const [courier, setCourier] = useState('jne')
+  const [ktpFile, setKtpFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -56,6 +43,18 @@ export default function CheckoutPage() {
     const fullAddress = `${street}, ${city}, ${province} ${postalCode}`
     const selectedCourier = COURIERS.find((c) => c.value === courier)
 
+    let ktpPath: string | null = null
+    if (ktpFile) {
+      const ext = ktpFile.name.split('.').pop()
+      const path = `ktp/${orderCode}-ktp.${ext}`
+      const { error: uploadError } = await supabase.storage
+        .from('customer-uploads')
+        .upload(path, ktpFile)
+      if (!uploadError) {
+        ktpPath = path
+      }
+    }
+
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .insert({
@@ -65,9 +64,10 @@ export default function CheckoutPage() {
         customer_phone: phone,
         customer_email: email,
         customer_address: fullAddress,
-        payment_method: 'doku',
+        payment_method: 'manual',
         shipping_method: courier,
         total_amount: grandTotal,
+        ktp_photo_path: ktpPath,
       })
       .select()
       .single()
@@ -103,27 +103,8 @@ export default function CheckoutPage() {
       return
     }
 
-    const res = await fetch('/api/doku/create-transaction', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        orderCode,
-        amount: grandTotal,
-        customerName: name,
-        customerEmail: email,
-        customerPhone: phone,
-      }),
-    })
-
-    const data = await res.json()
-
-    if (!res.ok || !data.paymentUrl) {
-      setError(data.error || 'Gagal memulai pembayaran')
-      setLoading(false)
-      return
-    }
-
-    window.location.href = data.paymentUrl
+    clearCart()
+    router.push(`/checkout/pembayaran/${orderCode}`)
   }
 
   if (items.length === 0) {
@@ -139,9 +120,7 @@ export default function CheckoutPage() {
       <h1 style={{ fontSize: 26, fontWeight: 800, color: 'var(--text)', marginBottom: 28 }}>Checkout</h1>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 32, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        {/* KOLOM KIRI — FORM */}
         <div style={{ flex: '1 1 480px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {/* Informasi Kontak */}
           <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
             <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>
               Informasi Kontak
@@ -171,10 +150,23 @@ export default function CheckoutPage() {
                   style={{ ...inputStyle, flex: 1 }}
                 />
               </div>
+              <div>
+                <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>
+                  Foto KTP/NPWP (opsional)
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setKtpFile(e.target.files?.[0] ?? null)}
+                  style={{ fontSize: 13 }}
+                />
+                <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 4 }}>
+                  Membantu mempercepat verifikasi untuk transaksi nominal besar.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Alamat Pengiriman */}
           <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
             <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>
               Alamat Pengiriman
@@ -214,7 +206,6 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Kurir Pengiriman */}
           <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>Kurir Pengiriman</h2>
@@ -246,30 +237,23 @@ export default function CheckoutPage() {
                     onChange={(e) => setCourier(e.target.value)}
                     style={{ accentColor: 'var(--gold)' }}
                   />
-                  
-                  {/* 2. Ganti Box Warna dengan Box Logo */}
                   <div
                     style={{
-                      width: 50,
+                      width: 36,
                       height: 36,
-                      borderRadius: 6,
-                      background: '#fff',
-                      border: '1px solid var(--border)',
+                      borderRadius: 8,
+                      background: c.color,
+                      color: '#fff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      fontSize: 11,
+                      fontWeight: 800,
                       flexShrink: 0,
-                      overflow: 'hidden',
-                      padding: 4, // memberikan jarak (padding) agar logo tidak menempel ke border
                     }}
                   >
-                    <img 
-                      src={c.logo} 
-                      alt={`Logo ${c.label}`} 
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
-                    />
+                    {c.badge}
                   </div>
-
                   <div style={{ flex: 1 }}>
                     <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{c.label}</p>
                     <p style={{ fontSize: 12, color: 'var(--muted)' }}>{c.desc}</p>
@@ -278,14 +262,9 @@ export default function CheckoutPage() {
                 </label>
               ))}
             </div>
-
-            <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 12 }}>
-              Pengambilan langsung di toko untuk sementara tidak tersedia.
-            </p>
           </div>
         </div>
 
-        {/* KOLOM KANAN — RINGKASAN PESANAN */}
         <div style={{ flex: '0 1 340px', minWidth: 300, position: 'sticky', top: 20 }}>
           <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
             <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 16 }}>
@@ -346,7 +325,7 @@ export default function CheckoutPage() {
                 opacity: loading ? 0.7 : 1,
               }}
             >
-              {loading ? 'Memproses...' : 'Bayar Sekarang'}
+              {loading ? 'Memproses...' : 'Selesaikan Order'}
             </button>
           </div>
         </div>

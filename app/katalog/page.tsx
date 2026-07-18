@@ -44,14 +44,17 @@ export default async function KatalogPage({
       <style>{`
         .katalog-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
           gap: 12px;
         }
         @media (min-width: 480px) {
-          .katalog-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+          .katalog-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
         }
         @media (min-width: 700px) {
-          .katalog-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+          .katalog-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+        }
+        .katalog-grid > * {
+          max-width: 320px;
         }
       `}</style>
 

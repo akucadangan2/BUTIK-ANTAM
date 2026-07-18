@@ -1,33 +1,7 @@
-const services = [
-  {
-    title: 'Ambil di Toko',
-    desc: 'Datang langsung dan ambil emas Anda H+1 setelah pembayaran dikonfirmasi.',
-    icon: (
-      <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-        <rect x="16" y="30" width="40" height="26" rx="4" fill="#FDECC8" stroke="#F5B400" strokeWidth="2" />
-        <path d="M16 30 L20 16 H52 L56 30" stroke="#F5B400" strokeWidth="2" fill="none" strokeLinejoin="round" />
-        <rect x="30" y="40" width="12" height="16" fill="#F5B400" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Kirim ke Luar Kota',
-    desc: 'Tidak perlu datang ke toko. Emas dikirim aman dan diasuransikan ke alamat Anda di seluruh Indonesia.',
-    icon: (
-      <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-        <rect x="12" y="26" width="34" height="24" rx="3" fill="#FDECC8" stroke="#F5B400" strokeWidth="2" />
-        <path d="M46 32 H56 L60 40 V50 H46 Z" fill="#FDECC8" stroke="#F5B400" strokeWidth="2" strokeLinejoin="round" />
-        <circle cx="24" cy="52" r="5" fill="#F5B400" />
-        <circle cx="50" cy="52" r="5" fill="#F5B400" />
-      </svg>
-    ),
-  },
-]
-
 const badges = [
   {
     title: 'Emas Bersertifikat',
-    desc: 'Setiap batangan emas Antam yang kami jual asli dan bersertifikat resmi.',
+    desc: 'Setiap batangan emas yang kami jual asli dan bersertifikat resmi.',
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <path d="M20 4 L34 10 V20 C34 28 28 34 20 37 C12 34 6 28 6 20 V10 Z" fill="#F5B400" />
@@ -37,7 +11,7 @@ const badges = [
   },
   {
     title: 'Pengiriman Berasuransi',
-    desc: 'Setiap pengiriman ke luar kota dilindungi asuransi hingga barang diterima.',
+    desc: 'Setiap pengiriman dilindungi asuransi penuh hingga barang diterima.',
     icon: (
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <rect x="6" y="12" width="24" height="18" rx="2" fill="#F5B400" />
@@ -62,39 +36,59 @@ const badges = [
 
 export default function ServicesSection() {
   return (
-    <section style={{ padding: '56px 40px', maxWidth: 1200, margin: '0 auto' }}>
-      <h2 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', textAlign: 'center', marginBottom: 36 }}>
-        Cara Menerima Emas Anda
-      </h2>
-
+    <section style={{ padding: 'clamp(32px, 6vw, 56px) clamp(20px, 5vw, 40px)', maxWidth: 1200, margin: '0 auto' }}>
       <div
         style={{
           background: 'var(--bg-alt)',
           border: '1px solid var(--border)',
           borderRadius: 16,
-          padding: '40px 32px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: 40,
-          marginBottom: 40,
+          padding: 'clamp(24px, 5vw, 40px)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'clamp(16px, 4vw, 28px)',
+          flexWrap: 'wrap',
+          marginBottom: 'clamp(28px, 5vw, 40px)',
         }}
       >
-        {services.map((s) => (
-          <div key={s.title} style={{ textAlign: 'center' }}>
-            <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}>{s.icon}</div>
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>{s.title}</h3>
-            <p style={{ fontSize: 14, color: 'var(--muted)', maxWidth: 320, margin: '0 auto' }}>{s.desc}</p>
-          </div>
-        ))}
+        <div
+          style={{
+            flexShrink: 0,
+            width: 'clamp(56px, 14vw, 72px)',
+            height: 'clamp(56px, 14vw, 72px)',
+            borderRadius: '50%',
+            background: '#FFF8E7',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <svg width="55%" height="55%" viewBox="0 0 44 44" fill="none">
+            <rect x="6" y="16" width="20" height="14" rx="2" fill="#F5B400" />
+            <path d="M26 20h8l4 5v5h-12z" fill="#D89600" />
+            <circle cx="13" cy="32" r="4" fill="#fff" stroke="#F5B400" strokeWidth="2.5" />
+            <circle cx="31" cy="32" r="4" fill="#fff" stroke="#D89600" strokeWidth="2.5" />
+          </svg>
+        </div>
+        <div style={{ flex: '1 1 260px' }}>
+          <h2 style={{ fontSize: 'clamp(17px, 3.5vw, 22px)', fontWeight: 800, color: 'var(--text)', marginBottom: 6 }}>
+            Pengiriman ke Seluruh Indonesia
+          </h2>
+          <p style={{ fontSize: 'clamp(13px, 2.8vw, 15px)', color: 'var(--muted)', lineHeight: 1.6 }}>
+            Setiap pesanan kami kirim langsung ke alamat Anda dengan asuransi
+            penuh, aman sampai tujuan di mana pun Anda berada di Indonesia.
+          </p>
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 28 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'clamp(16px, 3vw, 28px)' }}>
         {badges.map((b) => (
           <div key={b.title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
             <div style={{ flexShrink: 0 }}>{b.icon}</div>
             <div>
-              <h4 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{b.title}</h4>
-              <p style={{ fontSize: 13, color: 'var(--muted)' }}>{b.desc}</p>
+              <h4 style={{ fontSize: 'clamp(13.5px, 3vw, 15px)', fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+                {b.title}
+              </h4>
+              <p style={{ fontSize: 'clamp(12px, 2.6vw, 13px)', color: 'var(--muted)' }}>{b.desc}</p>
             </div>
           </div>
         ))}

@@ -35,7 +35,7 @@ export default function ProductCard({ product }: { product: Product }) {
         style={{
           position: 'relative',
           width: '100%',
-          height: 190,
+          height: 'clamp(110px, 28vw, 190px)',
           background: product.image_url ? `url(${product.image_url}) center/contain no-repeat` : 'var(--bg-alt)',
           display: 'flex',
           alignItems: 'center',
@@ -45,7 +45,7 @@ export default function ProductCard({ product }: { product: Product }) {
         }}
       >
         {!product.image_url && (
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <svg width="40%" height="40%" viewBox="0 0 56 56" fill="none">
             <rect x="10" y="18" width="36" height="24" rx="4" fill="var(--gold)" opacity="0.18" />
             <rect x="10" y="18" width="36" height="7" rx="3" fill="var(--gold)" opacity="0.35" />
             <circle cx="28" cy="32" r="6" fill="var(--gold)" opacity="0.3" />
@@ -56,16 +56,17 @@ export default function ProductCard({ product }: { product: Product }) {
           <span
             style={{
               position: 'absolute',
-              top: 12,
-              left: 12,
-              fontSize: 10,
+              top: 'clamp(6px, 2vw, 12px)',
+              left: 'clamp(6px, 2vw, 12px)',
+              fontSize: 'clamp(8px, 2vw, 10px)',
               letterSpacing: '0.04em',
               textTransform: 'uppercase',
               background: '#1A1A2E',
               color: '#fff',
-              padding: '4px 10px',
+              padding: '3px 8px',
               borderRadius: 999,
               fontWeight: 700,
+              whiteSpace: 'nowrap',
             }}
           >
             PreOrder
@@ -76,13 +77,13 @@ export default function ProductCard({ product }: { product: Product }) {
           <span
             style={{
               position: 'absolute',
-              top: 12,
-              right: 12,
-              fontSize: 11,
+              top: 'clamp(6px, 2vw, 12px)',
+              right: 'clamp(6px, 2vw, 12px)',
+              fontSize: 'clamp(9px, 2vw, 11px)',
               fontWeight: 800,
               background: '#16A34A',
               color: '#fff',
-              padding: '4px 9px',
+              padding: '3px 7px',
               borderRadius: 999,
             }}
           >
@@ -92,29 +93,32 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Info produk */}
-      <div style={{ padding: '16px 18px 18px', display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
+      <div style={{ padding: 'clamp(10px, 3vw, 18px)', display: 'flex', flexDirection: 'column', gap: 3, flex: 1 }}>
         <span
           style={{
-            fontSize: 11,
+            fontSize: 'clamp(9px, 2.2vw, 11px)',
             color: 'var(--gold-dark)',
             fontWeight: 700,
             textTransform: 'uppercase',
-            letterSpacing: '0.04em',
+            letterSpacing: '0.03em',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
           }}
         >
           {product.category?.name ?? 'Emas Antam'}
         </span>
 
-        <h3 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text)', margin: '2px 0 8px' }}>
+        <h3 style={{ fontSize: 'clamp(13px, 3vw, 17px)', fontWeight: 800, color: 'var(--text)', margin: '2px 0 6px' }}>
           {product.weight_gram} gram
         </h3>
 
-        <div style={{ marginBottom: 12 }}>
-          <div className="price" style={{ fontSize: 19, fontWeight: 800, color: 'var(--text)', lineHeight: 1.2 }}>
+        <div style={{ marginBottom: 8 }}>
+          <div className="price" style={{ fontSize: 'clamp(13px, 3.2vw, 19px)', fontWeight: 800, color: 'var(--text)', lineHeight: 1.25 }}>
             {formatRupiah(product.price_sell)}
           </div>
           {product.price_original && (
-            <div style={{ fontSize: 12, color: 'var(--muted)', textDecoration: 'line-through', marginTop: 2 }}>
+            <div style={{ fontSize: 'clamp(10px, 2.2vw, 12px)', color: 'var(--muted)', textDecoration: 'line-through', marginTop: 2 }}>
               {formatRupiah(product.price_original)}
             </div>
           )}
@@ -125,27 +129,27 @@ export default function ProductCard({ product }: { product: Product }) {
           style={{
             marginTop: 'auto',
             width: '100%',
-            padding: '11px 0',
+            padding: 'clamp(8px, 2.5vw, 11px) 0',
             background: hovered ? 'var(--gold-dark)' : 'var(--gold)',
             border: 'none',
-            borderRadius: 9,
+            borderRadius: 8,
             color: '#1A1A2E',
-            fontSize: 13,
+            fontSize: 'clamp(11px, 2.5vw, 13px)',
             fontWeight: 700,
             cursor: 'pointer',
             transition: 'background 0.2s',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 8,
+            gap: 6,
           }}
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
             <circle cx="9" cy="21" r="1" />
             <circle cx="20" cy="21" r="1" />
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
           </svg>
-          Tambah ke Keranjang
+          <span style={{ whiteSpace: 'nowrap' }}>Tambah</span>
         </button>
       </div>
     </div>

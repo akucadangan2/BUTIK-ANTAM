@@ -35,19 +35,20 @@ export default function GoldPriceChart({ prices }: { prices: PricePoint[] }) {
   }, [prices, range, mode])
 
   return (
-    <div style={{ background: 'var(--bg-alt)', border: '1px solid var(--border)', borderRadius: 16, padding: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
-        <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)' }}>Grafik Harga Emas</h3>
+    <div style={{ background: 'var(--bg-alt)', border: '1px solid var(--border)', borderRadius: 16, padding: 'clamp(14px, 4vw, 24px)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'clamp(14px, 3vw, 20px)', flexWrap: 'wrap', gap: 10 }}>
+        <h3 style={{ fontSize: 'clamp(14px, 3vw, 16px)', fontWeight: 700, color: 'var(--text)' }}>Grafik Harga Emas</h3>
         <div style={{ display: 'flex', gap: 6 }}>
           <button
             onClick={() => setMode('sell')}
             style={{
-              padding: '6px 14px',
+              padding: 'clamp(5px, 1.5vw, 6px) clamp(10px, 3vw, 14px)',
               borderRadius: 8,
               border: 'none',
-              fontSize: 13,
+              fontSize: 'clamp(11px, 2.5vw, 13px)',
               fontWeight: 700,
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
               background: mode === 'sell' ? 'var(--gold)' : 'transparent',
               color: mode === 'sell' ? 'var(--text)' : 'var(--muted)',
             }}
@@ -57,12 +58,13 @@ export default function GoldPriceChart({ prices }: { prices: PricePoint[] }) {
           <button
             onClick={() => setMode('buyback')}
             style={{
-              padding: '6px 14px',
+              padding: 'clamp(5px, 1.5vw, 6px) clamp(10px, 3vw, 14px)',
               borderRadius: 8,
               border: 'none',
-              fontSize: 13,
+              fontSize: 'clamp(11px, 2.5vw, 13px)',
               fontWeight: 700,
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
               background: mode === 'buyback' ? 'var(--gold)' : 'transparent',
               color: mode === 'buyback' ? 'var(--text)' : 'var(--muted)',
             }}
@@ -72,36 +74,37 @@ export default function GoldPriceChart({ prices }: { prices: PricePoint[] }) {
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={280}>
-        <LineChart data={filtered}>
+      <ResponsiveContainer width="100%" height={240}>
+        <LineChart data={filtered} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-          <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#9CA3AF' }} minTickGap={30} />
+          <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#9CA3AF' }} minTickGap={24} />
           <YAxis
-            tick={{ fontSize: 11, fill: '#9CA3AF' }}
+            tick={{ fontSize: 10, fill: '#9CA3AF' }}
             tickFormatter={(v) => `${(v / 1000000).toFixed(1)}jt`}
-            width={50}
+            width={44}
           />
           <Tooltip
             formatter={(value) => formatRupiah(Number(value))}
-            contentStyle={{ background: '#1A1A2E', border: 'none', borderRadius: 8, fontSize: 13 }}
+            contentStyle={{ background: '#1A1A2E', border: 'none', borderRadius: 8, fontSize: 12 }}
             labelStyle={{ color: '#9CA3AF' }}
           />
           <Line type="monotone" dataKey="value" stroke="#F5B400" strokeWidth={2.5} dot={false} />
         </LineChart>
       </ResponsiveContainer>
 
-      <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 6, marginTop: 'clamp(12px, 3vw, 16px)', flexWrap: 'wrap' }}>
         {RANGES.map((r) => (
           <button
             key={r.key}
             onClick={() => setRange(r.key)}
             style={{
-              padding: '6px 14px',
+              padding: 'clamp(5px, 1.5vw, 6px) clamp(10px, 3vw, 14px)',
               borderRadius: 8,
               border: '1px solid var(--border)',
-              fontSize: 13,
+              fontSize: 'clamp(11px, 2.5vw, 13px)',
               fontWeight: 600,
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
               background: range === r.key ? 'var(--text)' : 'transparent',
               color: range === r.key ? '#fff' : 'var(--muted)',
             }}

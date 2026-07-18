@@ -37,7 +37,7 @@ export default function LoginForm() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', display: 'flex' }}>
+    <main className="ba-auth-main">
       <style>{`
         @keyframes baFadeUp {
           from { opacity: 0; transform: translateY(16px); }
@@ -51,7 +51,29 @@ export default function LoginForm() {
           0%, 100% { transform: translate(0, 0) scale(1); }
           50% { transform: translate(-25px, 20px) scale(1.05); }
         }
-        .ba-auth-card { animation: baFadeUp 0.5s ease both; }
+        .ba-auth-main {
+          min-height: 100vh;
+          display: flex;
+        }
+        .ba-auth-brand {
+          flex: 1 1 45%;
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(160deg, #1A1A2E 0%, #2A2440 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 60px;
+          min-height: 100vh;
+        }
+        .ba-auth-form-panel {
+          flex: 1 1 55%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 40px;
+        }
+        .ba-auth-card { animation: baFadeUp 0.5s ease both; width: 100%; max-width: 380px; }
         .ba-auth-input {
           transition: border-color 0.2s, box-shadow 0.2s;
         }
@@ -71,21 +93,19 @@ export default function LoginForm() {
         }
         .ba-blob-1 { animation: baFloat1 7s ease-in-out infinite; }
         .ba-blob-2 { animation: baFloat2 9s ease-in-out infinite; }
+
+        @media (max-width: 780px) {
+          .ba-auth-main { flex-direction: column; min-height: auto; }
+          .ba-auth-brand {
+            min-height: 0;
+            flex: 0 0 auto;
+            padding: 32px 24px;
+          }
+          .ba-auth-form-panel { padding: 28px 20px 40px; }
+        }
       `}</style>
 
-      <div
-        style={{
-          flex: '1 1 45%',
-          position: 'relative',
-          overflow: 'hidden',
-          background: 'linear-gradient(160deg, #1A1A2E 0%, #2A2440 100%)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '60px',
-          minHeight: '100vh',
-        }}
-      >
+      <div className="ba-auth-brand">
         <div
           className="ba-blob-1"
           style={{
@@ -112,23 +132,23 @@ export default function LoginForm() {
         />
 
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', marginBottom: 20 }}>
+          <div style={{ fontSize: 'clamp(18px, 4vw, 22px)', fontWeight: 800, color: '#fff', marginBottom: 'clamp(10px, 3vw, 20px)' }}>
             BUTIK <span style={{ color: 'var(--gold)' }}>ANTAM</span>
           </div>
-          <h1 style={{ fontSize: 32, fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 16, maxWidth: 380 }}>
+          <h1 style={{ fontSize: 'clamp(22px, 5vw, 32px)', fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 'clamp(8px, 2vw, 16px)', maxWidth: 380 }}>
             Selamat Datang Kembali
           </h1>
-          <p style={{ fontSize: 15, color: '#9CA3AF', maxWidth: 340, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 'clamp(13px, 3vw, 15px)', color: '#9CA3AF', maxWidth: 340, lineHeight: 1.7 }}>
             Masuk untuk melihat riwayat pesanan, kelola profil, dan belanja emas
             Antam asli dengan lebih mudah.
           </p>
         </div>
       </div>
 
-      <div style={{ flex: '1 1 55%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
-        <div className="ba-auth-card" style={{ width: '100%', maxWidth: 380 }}>
-          <h2 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', marginBottom: 6 }}>Masuk</h2>
-          <p style={{ fontSize: 14, color: 'var(--muted)', marginBottom: 28 }}>
+      <div className="ba-auth-form-panel">
+        <div className="ba-auth-card">
+          <h2 style={{ fontSize: 'clamp(20px, 4.5vw, 24px)', fontWeight: 800, color: 'var(--text)', marginBottom: 6 }}>Masuk</h2>
+          <p style={{ fontSize: 'clamp(13px, 3vw, 14px)', color: 'var(--muted)', marginBottom: 'clamp(20px, 5vw, 28px)' }}>
             Masukkan email dan password akun Anda.
           </p>
 

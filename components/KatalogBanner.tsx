@@ -4,67 +4,45 @@ export default function KatalogBanner() {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        backgroundImage: 'linear-gradient(135deg, #F3E5C8 0%, #E8CB93 55%, #D9B36A 100%)',
-        minHeight: 260,
+        borderRadius: 16,
+        margin: 'clamp(12px, 3vw, 20px)',
+        minHeight: 'clamp(150px, 26vw, 340px)',
+        backgroundImage: 'url(/images/banner-katalog.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '32px 40px',
-        flexWrap: 'wrap',
-        gap: 24,
+        alignItems: 'flex-end',
       }}
     >
-      <svg
-        width="100%"
-        height="100%"
-        style={{ position: 'absolute', top: 0, left: 0, opacity: 0.12 }}
-        viewBox="0 0 1200 260"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <pattern id="diamondGrid" width="36" height="36" patternUnits="userSpaceOnUse">
-            <path d="M18 0L36 18L18 36L0 18Z" fill="none" stroke="#8A6D1F" strokeWidth="0.6" />
-          </pattern>
-        </defs>
-        <rect width="1200" height="260" fill="url(#diamondGrid)" />
-      </svg>
-
-      <img
-        src="/images/banner-katalog.png"
-        alt="Produk emas Butik Antam"
+      <div
         style={{
-          height: 200,
-          objectFit: 'contain',
-          position: 'relative',
-          zIndex: 1,
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(0deg, rgba(26,26,46,0.85) 0%, rgba(26,26,46,0.35) 55%, rgba(26,26,46,0) 100%)',
         }}
       />
 
       <div
         style={{
-          background: 'rgba(255,255,255,0.6)',
-          borderRadius: 14,
-          padding: '22px 30px',
-          maxWidth: 420,
           position: 'relative',
           zIndex: 1,
+          padding: 'clamp(16px, 4vw, 28px)',
+          maxWidth: 480,
         }}
       >
         <h2
           style={{
-            fontSize: 26,
+            fontSize: 'clamp(17px, 4vw, 26px)',
             fontWeight: 800,
             fontStyle: 'italic',
-            color: '#1A1A2E',
+            color: '#fff',
             margin: 0,
-            borderBottom: '2px solid #1A1A2E',
-            paddingBottom: 8,
-            display: 'inline-block',
+            marginBottom: 6,
           }}
         >
           Emas Antam Pilihan Anda
         </h2>
-        <p style={{ fontSize: 13, color: '#3B3B3B', marginTop: 10, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, margin: 0 }}>
           Butik Antam menyediakan berbagai jenis dan ukuran emas Antam asli
           yang sesuai dengan kebutuhan Anda.
         </p>

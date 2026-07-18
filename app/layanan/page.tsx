@@ -38,13 +38,15 @@ const services = [
     ),
   },
   {
-    title: 'Ambil di Toko / Kirim Luar Kota',
-    desc: 'Ambil langsung di toko H+1 setelah pembayaran, atau biarkan kami kirimkan dengan asuransi penuh ke alamat Anda di seluruh Indonesia.',
+    title: 'Pengiriman ke Seluruh Indonesia',
+    desc: 'Setiap pesanan kami kirim langsung ke alamat Anda dengan asuransi penuh, aman sampai tujuan di mana pun Anda berada di Indonesia.',
     cta: { label: 'Mulai Belanja', href: '/katalog' },
     icon: (
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-        <path d="M8 20 L22 10 L36 20 V34 H8 Z" stroke="#F5B400" strokeWidth="3" fill="none" strokeLinejoin="round" />
-        <rect x="18" y="24" width="8" height="10" fill="#F5B400" />
+        <rect x="6" y="16" width="20" height="14" rx="2" fill="#F5B400" />
+        <path d="M26 20h8l4 5v5h-12z" fill="#D89600" />
+        <circle cx="13" cy="32" r="4" fill="#fff" stroke="#F5B400" strokeWidth="2.5" />
+        <circle cx="31" cy="32" r="4" fill="#fff" stroke="#D89600" strokeWidth="2.5" />
       </svg>
     ),
   },
@@ -58,16 +60,16 @@ export default function LayananPage() {
           position: relative;
           display: flex;
           align-items: center;
-          gap: 56px;
-          padding: 56px 0;
+          gap: clamp(24px, 6vw, 56px);
+          padding: clamp(32px, 7vw, 56px) 0;
           border-bottom: 1px solid var(--border);
         }
         .service-row:last-child { border-bottom: none; }
         .service-row.reverse { flex-direction: row-reverse; }
         .service-visual {
-          flex: 0 0 240px;
-          height: 240px;
-          border-radius: 24px;
+          flex: 0 0 clamp(120px, 30vw, 240px);
+          height: clamp(120px, 30vw, 240px);
+          border-radius: clamp(14px, 3vw, 24px);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -77,13 +79,13 @@ export default function LayananPage() {
         .service-visual::before {
           content: '';
           position: absolute;
-          inset: 18px;
+          inset: clamp(10px, 2.5vw, 18px);
           border: 1px dashed var(--border);
-          border-radius: 16px;
+          border-radius: clamp(10px, 2vw, 16px);
         }
         .service-icon-badge {
-          width: 84px;
-          height: 84px;
+          width: clamp(52px, 14vw, 84px);
+          height: clamp(52px, 14vw, 84px);
           border-radius: 50%;
           background: #FFF8E7;
           display: flex;
@@ -92,11 +94,15 @@ export default function LayananPage() {
           position: relative;
           z-index: 1;
         }
+        .service-icon-badge svg {
+          width: 55%;
+          height: 55%;
+        }
         .service-cta {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          font-size: 14px;
+          font-size: clamp(13px, 3vw, 14px);
           font-weight: 700;
           color: var(--text);
           padding: 12px 4px;
@@ -105,13 +111,13 @@ export default function LayananPage() {
         }
         .service-cta:hover { gap: 14px; }
         @media (max-width: 720px) {
-          .service-row, .service-row.reverse { flex-direction: column; }
-          .service-visual { flex: 0 0 auto; width: 100%; }
+          .service-row, .service-row.reverse { flex-direction: column; align-items: flex-start; }
+          .service-visual { flex: 0 0 auto; width: clamp(120px, 40vw, 180px); align-self: center; }
         }
       `}</style>
 
       {/* HERO */}
-      <section style={{ position: 'relative', padding: '72px 40px 56px', maxWidth: 1000, margin: '0 auto' }}>
+      <section style={{ position: 'relative', padding: 'clamp(40px, 8vw, 72px) clamp(16px, 5vw, 40px) clamp(32px, 6vw, 56px)', maxWidth: 1000, margin: '0 auto' }}>
         <div
           style={{
             position: 'absolute',
@@ -125,13 +131,13 @@ export default function LayananPage() {
           }}
         />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: 12, letterSpacing: '0.08em', color: 'var(--gold-dark)', fontWeight: 700, marginBottom: 14 }}>
+          <div style={{ fontSize: 12, letterSpacing: '0.08em', color: 'var(--gold-dark)', fontWeight: 700, marginBottom: 12 }}>
             LAYANAN KAMI
           </div>
-          <h1 style={{ fontSize: 38, fontWeight: 800, color: 'var(--text)', marginBottom: 16, maxWidth: 620, lineHeight: 1.15 }}>
+          <h1 style={{ fontSize: 'clamp(24px, 6vw, 38px)', fontWeight: 800, color: 'var(--text)', marginBottom: 14, maxWidth: 620, lineHeight: 1.2 }}>
             Solusi Lengkap Jual Beli Emas Anda
           </h1>
-          <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 480 }}>
+          <p style={{ color: 'var(--muted)', fontSize: 'clamp(13px, 3vw, 16px)', maxWidth: 480 }}>
             Dari membeli, menjual kembali, hingga pengiriman ke seluruh
             Indonesia — semua kebutuhan emas Anda kami layani langsung.
           </p>
@@ -139,17 +145,17 @@ export default function LayananPage() {
       </section>
 
       {/* SERVICES */}
-      <section style={{ maxWidth: 1000, margin: '0 auto', padding: '0 40px' }}>
+      <section style={{ maxWidth: 1000, margin: '0 auto', padding: '0 clamp(16px, 5vw, 40px)' }}>
         {services.map((s, i) => (
           <div key={s.title} className={`service-row${i % 2 === 1 ? ' reverse' : ''}`}>
             <div className="service-visual">
               <div className="service-icon-badge">{s.icon}</div>
             </div>
             <div style={{ flex: 1 }}>
-              <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text)', marginBottom: 12 }}>
+              <h3 style={{ fontSize: 'clamp(17px, 4vw, 22px)', fontWeight: 800, color: 'var(--text)', marginBottom: 10 }}>
                 {s.title}
               </h3>
-              <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.6, marginBottom: 20, maxWidth: 480 }}>
+              <p style={{ fontSize: 'clamp(13px, 3vw, 15px)', color: 'var(--muted)', lineHeight: 1.6, marginBottom: 16, maxWidth: 480 }}>
                 {s.desc}
               </p>
               <Link href={s.cta.href} className="service-cta">
@@ -164,12 +170,12 @@ export default function LayananPage() {
       </section>
 
       {/* CTA BAWAH */}
-      <section style={{ padding: '64px 40px', background: 'var(--bg-alt)', marginTop: 40 }}>
+      <section style={{ padding: 'clamp(40px, 8vw, 64px) clamp(16px, 5vw, 40px)', background: 'var(--bg-alt)', marginTop: 'clamp(24px, 5vw, 40px)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', marginBottom: 12 }}>
+          <h2 style={{ fontSize: 'clamp(18px, 4vw, 24px)', fontWeight: 800, color: 'var(--text)', marginBottom: 10 }}>
             Siap Belanja Emas Hari Ini?
           </h2>
-          <p style={{ color: 'var(--muted)', marginBottom: 28 }}>
+          <p style={{ color: 'var(--muted)', marginBottom: 22, fontSize: 'clamp(13px, 3vw, 15px)' }}>
             Cek katalog dan harga terbaru, lalu pesan dalam hitungan menit.
           </p>
           <Link
@@ -178,10 +184,10 @@ export default function LayananPage() {
               display: 'inline-block',
               background: 'var(--gold)',
               color: 'var(--text)',
-              padding: '14px 32px',
+              padding: 'clamp(11px, 3vw, 14px) clamp(22px, 5vw, 32px)',
               borderRadius: 10,
               fontWeight: 700,
-              fontSize: 14,
+              fontSize: 'clamp(13px, 3vw, 14px)',
             }}
           >
             Lihat Katalog Sekarang

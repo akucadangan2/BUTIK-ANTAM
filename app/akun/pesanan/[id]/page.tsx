@@ -1,6 +1,6 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase-server'
 import { formatRupiah } from '@/lib/utils'
-import PayNowButton from '@/components/PayNowButton'
 import { notFound } from 'next/navigation'
 
 const STATUS_STYLES: Record<string, { bg: string; color: string }> = {
@@ -28,6 +28,14 @@ export default async function PesananDetailPage({ params }: { params: Promise<{ 
 
   const { data: orderItems } = await supabase.from('order_items').select('*').eq('order_id', id)
 
+  const { data: confirmation } = await supabase
+    .from('payment_confirmations')
+    .select('id, created_at')
+    .eq('order_id', id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
   const statusStyle = STATUS_STYLES[order.status] ?? STATUS_STYLES.pending
 
   return (
@@ -54,18 +62,41 @@ export default async function PesananDetailPage({ params }: { params: Promise<{ 
         </span>
       </div>
 
-      {order.status === 'pending' && (
+      {order.status === 'pending' && confirmation && (
+        <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24, marginBottom: 20, background: '#EFF6FF' }}>
+          <p style={{ fontSize: 14, color: '#1E40AF', fontWeight: 700, marginBottom: 4 }}>
+            Menunggu Verifikasi Admin
+          </p>
+          <p style={{ fontSize: 13, color: '#1E3A8A' }}>
+            Bukti pembayaran Anda sudah kami terima pada{' '}
+            {new Date(confirmation.created_at).toLocaleString('id-ID')}. Admin akan
+            memverifikasi dalam waktu 1x24 jam kerja.
+          </p>
+        </div>
+      )}
+
+      {order.status === 'pending' && !confirmation && (
         <div style={{ border: '1px solid var(--border)', borderRadius: 14, padding: 24, marginBottom: 20, background: 'var(--bg-alt)' }}>
           <p style={{ fontSize: 14, color: 'var(--text)', marginBottom: 14 }}>
             Pesanan Anda menunggu pembayaran. Selesaikan pembayaran sekarang.
           </p>
-          <PayNowButton
-            orderCode={order.order_code}
-            amount={order.total_amount}
-            customerName={order.customer_name}
-            customerEmail={order.customer_email}
-            customerPhone={order.customer_phone}
-          />
+          <Link
+            href={`/checkout/pembayaran/${order.order_code}`}
+            style={{
+              display: 'block',
+              textAlign: 'center',
+              width: '100%',
+              padding: '13px 0',
+              background: 'var(--gold)',
+              color: '#1A1A2E',
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 14,
+              textDecoration: 'none',
+            }}
+          >
+            Lanjutkan Pembayaran
+          </Link>
         </div>
       )}
 
