@@ -91,7 +91,7 @@ export default function PaymentConfirmationForm({ orderId, orderCode, defaultAmo
       </div>
 
       <div>
-        <label style={labelStyle}>Bank Asal Anda</label>
+        <label style={labelStyle}>Dibayar Menggunakan Aplikasi (contoh: BCA Mobile, GoPay, DANA)</label>
         <input
           placeholder="Contoh: BCA"
           value={sourceBank}

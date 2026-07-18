@@ -14,19 +14,9 @@ export default async function KonfirmasiPembayaranPage({ params }: { params: Pro
 
   if (!order) return notFound()
 
-  const { data: settings } = await supabase
-    .from('payment_settings')
-    .select('bank_name, bank_account_number, bank_account_holder')
-    .limit(1)
-    .single()
-
-  const transferredTo = settings
-    ? `${settings.bank_name} ${settings.bank_account_number} a.n. ${settings.bank_account_holder}`
-    : 'BRI - Hubungi admin WhatsApp'
-
   return (
-    <main style={{ padding: 'clamp(24px, 6vw, 48px) clamp(16px, 5vw, 40px)', maxWidth: 480, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text)', marginBottom: 24, textAlign: 'center' }}>
+    <main style={{ padding: 'clamp(16px, 5vw, 48px) clamp(16px, 5vw, 40px)', maxWidth: 460, margin: '0 auto' }}>
+      <h1 style={{ fontSize: 'clamp(18px, 4vw, 22px)', fontWeight: 800, color: 'var(--text)', marginBottom: 'clamp(16px, 4vw, 24px)', textAlign: 'center' }}>
         Konfirmasi Pembayaran
       </h1>
 
@@ -34,7 +24,7 @@ export default async function KonfirmasiPembayaranPage({ params }: { params: Pro
         orderId={order.id}
         orderCode={order.order_code}
         defaultAmount={order.total_amount}
-        transferredTo={transferredTo}
+        transferredTo="QRIS Butik Antam"
       />
     </main>
   )
