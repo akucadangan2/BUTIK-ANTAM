@@ -7,7 +7,7 @@ export default function Footer() {
   const pathname = usePathname()
   if (pathname?.startsWith('/admin') || pathname === '/login') return null
 
-  const waLink = 'https://wa.me/6289563522389'
+  const waLink = 'https://wa.me/62895635223839'
   const mailLink = 'mailto:Herusukoco395@gmail.com'
 
   return (

@@ -4,7 +4,7 @@ import { formatRupiah } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 import CancelOrderButton from '@/components/CancelOrderButton'
 
-const DEFAULT_WHATSAPP = '6289563522389'
+const DEFAULT_WHATSAPP = '62895635223839'
 
 export default async function PembayaranPage({ params }: { params: Promise<{ kode: string }> }) {
   const { kode } = await params
