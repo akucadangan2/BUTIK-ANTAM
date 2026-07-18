@@ -47,6 +47,20 @@ export default function DaftarPage() {
     if (data.session) {
       router.push('/akun')
       router.refresh()
+      setLoading(false)
+      return
+    }
+
+    // Fallback: kalau signUp tidak langsung memberi sesi, coba login otomatis.
+    // Kalau proyek Supabase memang tidak lagi mewajibkan konfirmasi email, ini akan berhasil.
+    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (!signInError && signInData.session) {
+      router.push('/akun')
+      router.refresh()
     } else {
       setInfo('Pendaftaran berhasil! Silakan cek email Anda untuk konfirmasi sebelum login.')
     }

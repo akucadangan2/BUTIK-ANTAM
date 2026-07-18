@@ -167,10 +167,16 @@ export default function LoginForm() {
               />
             </div>
 
+            {/* Bagian Password dengan link "Lupa password?" */}
             <div>
-              <label style={{ fontSize: 12, fontWeight: 700, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>
-                Password
-              </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                <label style={{ fontSize: 12, fontWeight: 700, color: 'var(--muted)' }}>
+                  Password
+                </label>
+                <Link href="/lupa-password" style={{ fontSize: 12, fontWeight: 700, color: 'var(--gold-dark)' }}>
+                  Lupa password?
+                </Link>
+              </div>
               <input
                 type="password"
                 className="ba-auth-input"
