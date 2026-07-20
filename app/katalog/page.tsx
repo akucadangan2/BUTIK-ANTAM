@@ -81,7 +81,7 @@ export default async function KatalogPage({
         <p style={{ color: 'var(--muted)', marginBottom: 20, maxWidth: 480, fontSize: 'clamp(13px, 2vw, 15px)' }}>
           Emas 99.99% asli dengan sertifikat resmi. Barang dapat diambil H+1
           setelah konfirmasi pembayaran.
-        </p>
+        </p>sda
 
         {/* Filter kategori */}
         <form method="GET" style={{ display: 'flex', gap: 10, marginBottom: 28, flexWrap: 'wrap' }}>
