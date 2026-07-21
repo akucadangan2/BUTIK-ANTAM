@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import AdminBottomNav from '@/components/admin/AdminBottomNav'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -35,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <button
             onClick={() => setSidebarOpen(true)}
             style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: 4 }}
-            aria-label="Buka menu"
+            aria-label="Buka menu lengkap"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M3 6h18M3 12h18M3 18h18" />
@@ -45,6 +46,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {children}
       </div>
+
+      <AdminBottomNav />
     </div>
   )
 }
